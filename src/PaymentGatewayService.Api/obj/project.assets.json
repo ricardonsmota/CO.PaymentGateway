@@ -31,8 +31,7 @@
         "netcoreapp3.1"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {},
-        "https://pkgs.dev.azure.com/inmotio-development/_packaging/Inmotio/nuget/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp3.1": {
@@ -58,6 +57,9 @@
         "assetTargetFallback": true,
         "warn": true,
         "frameworkReferences": {
+          "Microsoft.AspNetCore.App": {
+            "privateAssets": "none"
+          },
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "uH9houjhjGwBGrsnp0aWm/KUoa7/WHaJsizu0pDEQRwk8LA5I3IUqvG+hzrBE6QgsZMoSJdsI0glc1BfsKzOIQ==",
+  "dgSpecHash": "rBz4h4gBACOgG853De/vqRwvdu9ZyajtWN2aAZQWE3UaSimm1UZZ6tWil7BRKz8KGGpQ+2nDZ+nkCDEVV7XoYw==",
   "success": true,
   "projectFilePath": "/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.UnitTests/PaymentGatewayService.UnitTests.csproj",
   "expectedPackageFiles": [

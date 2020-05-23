@@ -1,8 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "+pa67ZWdVT0r9knI50V8r9JIA7q9MTH7q3DK0DDqmE4Z+NTr6urGMykJ4KtSHQwA8Mf49K/eh3Hi85ReNd8zBA==",
+  "dgSpecHash": "NQ9bG/rXMxqVxZey4vPNGn4fgnWhARUZTpGCBdZXhm6HNglhowlrJJ+oXrkcSBBD/6eVe0eofBq1xBph6u0Aow==",
   "success": true,
   "projectFilePath": "/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService/PaymentGatewayService.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/ricardomota/.nuget/packages/fluentvalidation/8.6.2/fluentvalidation.8.6.2.nupkg.sha512",
+    "/Users/ricardomota/.nuget/packages/fluentvalidation.aspnetcore/8.6.2/fluentvalidation.aspnetcore.8.6.2.nupkg.sha512",
+    "/Users/ricardomota/.nuget/packages/fluentvalidation.dependencyinjectionextensions/8.6.2/fluentvalidation.dependencyinjectionextensions.8.6.2.nupkg.sha512",
+    "/Users/ricardomota/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/2.1.0/microsoft.extensions.dependencyinjection.abstractions.2.1.0.nupkg.sha512",
+    "/Users/ricardomota/.nuget/packages/system.componentmodel.annotations/4.4.1/system.componentmodel.annotations.4.4.1.nupkg.sha512"
+  ],
   "logs": []
 }

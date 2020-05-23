@@ -1,7 +1,6 @@
 /Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.Api.ViewModels/bin/Debug/netcoreapp3.1/PaymentGatewayService.Api.ViewModels.deps.json
 /Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.Api.ViewModels/bin/Debug/netcoreapp3.1/PaymentGatewayService.Api.ViewModels.dll
 /Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.Api.ViewModels/bin/Debug/netcoreapp3.1/PaymentGatewayService.Api.ViewModels.pdb
-/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.Api.ViewModels/obj/Debug/netcoreapp3.1/PaymentGatewayService.Api.ViewModels.csprojAssemblyReference.cache
 /Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.Api.ViewModels/obj/Debug/netcoreapp3.1/PaymentGatewayService.Api.ViewModels.AssemblyInfoInputs.cache
 /Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.Api.ViewModels/obj/Debug/netcoreapp3.1/PaymentGatewayService.Api.ViewModels.AssemblyInfo.cs
 /Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.Api.ViewModels/obj/Debug/netcoreapp3.1/PaymentGatewayService.Api.ViewModels.dll
