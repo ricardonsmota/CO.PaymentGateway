@@ -6,8 +6,12 @@ namespace PaymentGatewayService.Payments
 {
     public interface IPaymentService
     {
-        Task<ServiceResponse<Payment>> Create(CreatePaymentCommand command);
+        Task<ServiceResult<Payment>> Create(CreatePaymentCommand command);
 
-        Task<ServiceResponse<Payment>> Get(GetPaymentCommand command);
+        Task<ServiceResult<Payment>> Get(GetPaymentCommand command);
+
+        Task<ServiceResult> SetStatusAccepted(SetPaymentStatusAcceptedCommand command);
+
+        Task<ServiceResult> SetStatusRejected(SetPaymentStatusRejectedCommand command);
     }
 }

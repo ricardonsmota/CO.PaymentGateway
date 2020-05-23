@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
@@ -22,38 +23,108 @@ namespace PaymentGatewayService.Payments
             _repository = repository;
         }
 
-        public async Task<ServiceResponse<Payment>> Create(CreatePaymentCommand command)
+        public async Task<ServiceResult<Payment>> Create(CreatePaymentCommand command)
         {
             var validationResult = await _validator.ValidateAsync(command);
 
             if (validationResult.IsValid == false)
             {
-                return new ServiceResponse<Payment>(ServiceErrorCode.ValidationError);
+                return new ServiceResult<Payment>(ServiceErrorCode.ValidationError);
             }
 
-            var payment = new Payment();
+            var payment = new Payment()
+            {
+                Id = Guid.NewGuid(),
+            };
 
-            throw new System.NotImplementedException();
+            // Repository CREATE
+
+            return new ServiceResult<Payment>(payment);
         }
 
-        public async Task<ServiceResponse<Payment>> Get(GetPaymentCommand command)
+        public async Task<ServiceResult<Payment>> Get(GetPaymentCommand command)
         {
             var validationResult = await _validator.ValidateAsync(command);
 
             if (validationResult.IsValid == false)
             {
-                return new ServiceResponse<Payment>(ServiceErrorCode.ValidationError);
+                return new ServiceResult<Payment>(ServiceErrorCode.ValidationError);
             }
 
             var payment = await _repository.Get();
 
             if (payment == null)
             {
-                _logger.LogWarning($"Payment with id {command} not found.");
-                return new ServiceResponse<Payment>(ServiceErrorCode.NotFound);
+                _logger.LogWarning($"Payment with id {command.Id.ToString()} not found.");
+                return new ServiceResult<Payment>(ServiceErrorCode.NotFound);
             }
 
-            return new ServiceResponse<Payment>(payment);
+            // Repository GET
+
+            return new ServiceResult<Payment>(payment);
+        }
+
+        public async Task<ServiceResult> SetStatusAccepted(SetPaymentStatusAcceptedCommand command)
+        {
+            var validationResult = await _validator.ValidateAsync(command);
+
+            if (validationResult.IsValid == false)
+            {
+                _logger.LogError(
+                    $"A validation error occurred while trying to set payment {command.Id.ToString()} as accepted.");
+
+                return new ServiceResult<Payment>(ServiceErrorCode.ValidationError);
+            }
+
+            var payment = await _repository.Get();
+
+            if (payment == null)
+            {
+                _logger.LogError($"Payment with id {command.Id.ToString()} not found.");
+                return new ServiceResult<Payment>(ServiceErrorCode.NotFound);
+            }
+
+            payment.Status = new PaymentStatus()
+            {
+                StatusCode = PaymentStatusCode.Accepted,
+                Modified = command.Modified
+            };
+
+            // Repository Save.
+
+            return new ServiceResult<Payment>(payment);
+        }
+
+        public async Task<ServiceResult> SetStatusRejected(SetPaymentStatusRejectedCommand command)
+        {
+            var validationResult = await _validator.ValidateAsync(command);
+
+            if (validationResult.IsValid == false)
+            {
+                _logger.LogError(
+                    $"A validation error occurred while trying to set payment {command.Id.ToString()} as rejected.");
+
+                return new ServiceResult<Payment>(ServiceErrorCode.ValidationError);
+            }
+
+            var payment = await _repository.Get();
+
+            if (payment == null)
+            {
+                _logger.LogError($"Payment with id {command.Id.ToString()} not found.");
+                return new ServiceResult<Payment>(ServiceErrorCode.NotFound);
+            }
+
+            payment.Status = new PaymentStatus()
+            {
+                StatusCode = PaymentStatusCode.Rejected,
+                ErrorMessage = command.ErrorMessage,
+                Modified = command.Modified
+            };
+
+            // Repository Save.
+
+            return new ServiceResult<Payment>(payment);
         }
     }
 }

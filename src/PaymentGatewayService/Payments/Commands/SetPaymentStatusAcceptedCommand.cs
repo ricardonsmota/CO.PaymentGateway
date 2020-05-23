@@ -2,8 +2,10 @@ using System;
 
 namespace PaymentGatewayService.Payments.Commands
 {
-    public class GetPaymentCommand
+    public class SetPaymentStatusAcceptedCommand
     {
         public Guid Id { get; set; }
+
+        public DateTime Modified { get; set; }
     }
 }

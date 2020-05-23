@@ -19,5 +19,7 @@ namespace PaymentGatewayService.Payments
         public PaymentCurrency Currency { get; set; }
 
         public DateTime Created { get; set; }
+
+        public PaymentStatus Status { get; set; }
     }
 }

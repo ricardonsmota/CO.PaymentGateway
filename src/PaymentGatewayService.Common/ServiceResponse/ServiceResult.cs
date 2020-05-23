@@ -1,17 +1,21 @@
 namespace PaymentGatewayService.Common.ServiceResponse
 {
-    public class ServiceResponse
+    /**
+     * Ideally this logic would be put into a separate project (like a domain base project) that could be
+     * packed into a Nuget and reused on other services.
+     */
+    public class ServiceResult
     {
-        public ServiceResponse()
+        public ServiceResult()
         {
         }
 
-        public ServiceResponse(ServiceError error)
+        public ServiceResult(ServiceError error)
         {
             Error = error;
         }
 
-        public ServiceResponse(ServiceErrorCode errorCode)
+        public ServiceResult(ServiceErrorCode errorCode)
         {
             Error = new ServiceError
             {
@@ -26,23 +30,23 @@ namespace PaymentGatewayService.Common.ServiceResponse
         public bool IsSuccess => !IsError;
     }
 
-    public class ServiceResponse<T> : ServiceResponse
+    public class ServiceResult<T> : ServiceResult
     {
-        public ServiceResponse(ServiceError error)
+        public ServiceResult(ServiceError error)
             : base(error)
         {
         }
 
-        public ServiceResponse()
+        public ServiceResult()
         {
         }
 
-        public ServiceResponse(ServiceErrorCode errorCode)
+        public ServiceResult(ServiceErrorCode errorCode)
             : base(errorCode)
         {
         }
 
-        public ServiceResponse(T result)
+        public ServiceResult(T result)
         {
             Result = result;
         }
