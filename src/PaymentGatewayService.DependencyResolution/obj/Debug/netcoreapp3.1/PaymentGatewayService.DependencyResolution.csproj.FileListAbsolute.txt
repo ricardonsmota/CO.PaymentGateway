@@ -1,8 +1,0 @@
-/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.DependencyResolution/bin/Debug/netcoreapp3.1/PaymentGatewayService.DependencyResolution.deps.json
-/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.DependencyResolution/bin/Debug/netcoreapp3.1/PaymentGatewayService.DependencyResolution.dll
-/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.DependencyResolution/bin/Debug/netcoreapp3.1/PaymentGatewayService.DependencyResolution.pdb
-/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.DependencyResolution/obj/Debug/netcoreapp3.1/PaymentGatewayService.DependencyResolution.csprojAssemblyReference.cache
-/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.DependencyResolution/obj/Debug/netcoreapp3.1/PaymentGatewayService.DependencyResolution.AssemblyInfoInputs.cache
-/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.DependencyResolution/obj/Debug/netcoreapp3.1/PaymentGatewayService.DependencyResolution.AssemblyInfo.cs
-/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.DependencyResolution/obj/Debug/netcoreapp3.1/PaymentGatewayService.DependencyResolution.dll
-/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.DependencyResolution/obj/Debug/netcoreapp3.1/PaymentGatewayService.DependencyResolution.pdb
