@@ -1,0 +1,8 @@
+/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.Api.Client/bin/Debug/netcoreapp3.1/PaymentGatewayService.Api.Client.deps.json
+/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.Api.Client/bin/Debug/netcoreapp3.1/PaymentGatewayService.Api.Client.dll
+/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.Api.Client/bin/Debug/netcoreapp3.1/PaymentGatewayService.Api.Client.pdb
+/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.Api.Client/obj/Debug/netcoreapp3.1/PaymentGatewayService.Api.Client.csprojAssemblyReference.cache
+/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.Api.Client/obj/Debug/netcoreapp3.1/PaymentGatewayService.Api.Client.AssemblyInfoInputs.cache
+/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.Api.Client/obj/Debug/netcoreapp3.1/PaymentGatewayService.Api.Client.AssemblyInfo.cs
+/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.Api.Client/obj/Debug/netcoreapp3.1/PaymentGatewayService.Api.Client.dll
+/Users/ricardomota/Git/CW/CO.PaymentGateway/src/PaymentGatewayService.Api.Client/obj/Debug/netcoreapp3.1/PaymentGatewayService.Api.Client.pdb
