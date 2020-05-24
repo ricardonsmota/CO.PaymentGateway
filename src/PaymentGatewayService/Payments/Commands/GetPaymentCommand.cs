@@ -4,6 +4,6 @@ namespace PaymentGatewayService.Payments.Commands
 {
     public class GetPaymentCommand
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
     }
 }

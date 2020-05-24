@@ -1,31 +1,30 @@
 using System;
 using System.Threading.Tasks;
-using FluentValidation;
 using Microsoft.Extensions.Logging;
+using MongoDB.Bson;
 using PaymentGatewayService.Common.ServiceResponse;
 using PaymentGatewayService.Payments.Commands;
+using PaymentGatewayService.Payments.Validators;
 
 namespace PaymentGatewayService.Payments
 {
     public class PaymentService : IPaymentService
     {
         private readonly ILogger _logger;
-        private readonly IValidator _validator;
         private readonly IPaymentRepository _repository;
 
         public PaymentService(
-            ILogger logger,
-            IValidator validator,
+            ILogger<PaymentService> logger,
             IPaymentRepository repository)
         {
             _logger = logger;
-            _validator = validator;
             _repository = repository;
         }
 
         public async Task<ServiceResult<Payment>> Create(CreatePaymentCommand command)
         {
-            var validationResult = await _validator.ValidateAsync(command);
+            var validator = new CreatePaymentCommandValidator();
+            var validationResult = await validator.ValidateAsync(command);
 
             if (validationResult.IsValid == false)
             {
@@ -34,24 +33,37 @@ namespace PaymentGatewayService.Payments
 
             var payment = new Payment()
             {
-                Id = Guid.NewGuid(),
+                Id = ObjectId.GenerateNewId().ToString(),
+                Amount = command.Amount,
+                CardNumber = command.CardNumber,
+                Created = DateTime.UtcNow,
+                Currency = command.Currency,
+                Cvv = command.Cvv,
+                ExpirationMonth = command.ExpirationMonth,
+                ExpirationYear = command.ExpirationYear,
+                Status = new PaymentStatus()
+                {
+                    Modified = DateTime.UtcNow,
+                    StatusCode = PaymentStatusCode.Processing
+                }
             };
 
-            // Repository CREATE
+            await _repository.Create(payment);
 
             return new ServiceResult<Payment>(payment);
         }
 
         public async Task<ServiceResult<Payment>> Get(GetPaymentCommand command)
         {
-            var validationResult = await _validator.ValidateAsync(command);
+            var validator = new GetPaymentCommandValidator();
+            var validationResult = await validator.ValidateAsync(command);
 
             if (validationResult.IsValid == false)
             {
                 return new ServiceResult<Payment>(ServiceErrorCode.ValidationError);
             }
 
-            var payment = await _repository.Get();
+            var payment = await _repository.Get(command.Id);
 
             if (payment == null)
             {
@@ -59,14 +71,13 @@ namespace PaymentGatewayService.Payments
                 return new ServiceResult<Payment>(ServiceErrorCode.NotFound);
             }
 
-            // Repository GET
-
             return new ServiceResult<Payment>(payment);
         }
 
         public async Task<ServiceResult> SetStatusAccepted(SetPaymentStatusAcceptedCommand command)
         {
-            var validationResult = await _validator.ValidateAsync(command);
+            var validator = new SetPaymentStatusAcceptedCommandValidator();
+            var validationResult = await validator.ValidateAsync(command);
 
             if (validationResult.IsValid == false)
             {
@@ -76,7 +87,7 @@ namespace PaymentGatewayService.Payments
                 return new ServiceResult<Payment>(ServiceErrorCode.ValidationError);
             }
 
-            var payment = await _repository.Get();
+            var payment = await _repository.Get(command.Id);
 
             if (payment == null)
             {
@@ -90,14 +101,15 @@ namespace PaymentGatewayService.Payments
                 Modified = command.Modified
             };
 
-            // Repository Save.
+            await _repository.Save(payment);
 
             return new ServiceResult<Payment>(payment);
         }
 
         public async Task<ServiceResult> SetStatusRejected(SetPaymentStatusRejectedCommand command)
         {
-            var validationResult = await _validator.ValidateAsync(command);
+            var validator = new SetPaymentStatusRejectedCommandValidator();
+            var validationResult = await validator.ValidateAsync(command);
 
             if (validationResult.IsValid == false)
             {
@@ -107,7 +119,7 @@ namespace PaymentGatewayService.Payments
                 return new ServiceResult<Payment>(ServiceErrorCode.ValidationError);
             }
 
-            var payment = await _repository.Get();
+            var payment = await _repository.Get(command.Id);
 
             if (payment == null)
             {
@@ -122,7 +134,7 @@ namespace PaymentGatewayService.Payments
                 Modified = command.Modified
             };
 
-            // Repository Save.
+            await _repository.Save(payment);
 
             return new ServiceResult<Payment>(payment);
         }

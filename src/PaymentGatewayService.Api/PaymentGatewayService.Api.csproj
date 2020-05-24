@@ -4,5 +4,13 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\PaymentGatewayService.Api.ViewModels\PaymentGatewayService.Api.ViewModels.csproj" />
+      <ProjectReference Include="..\PaymentGatewayService\PaymentGatewayService.csproj" />
+    </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="5.4.1" />
+    </ItemGroup>
+    
 </Project>

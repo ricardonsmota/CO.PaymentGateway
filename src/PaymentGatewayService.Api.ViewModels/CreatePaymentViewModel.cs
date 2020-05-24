@@ -1,8 +1,6 @@
-using System;
-
-namespace PaymentGatewayService.Payments.Commands
+namespace PaymentGatewayService.Api.ViewModels
 {
-    public class CreatePaymentCommand
+    public class CreatePaymentViewModel
     {
         public string CardNumber { get; set; }
 
@@ -15,7 +13,5 @@ namespace PaymentGatewayService.Payments.Commands
         public int Cvv { get; set; }
 
         public string Currency { get; set; }
-
-        public DateTime Created { get; set; }
     }
 }

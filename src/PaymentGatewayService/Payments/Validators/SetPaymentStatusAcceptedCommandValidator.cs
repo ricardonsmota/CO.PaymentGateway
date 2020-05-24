@@ -3,7 +3,7 @@ using PaymentGatewayService.Payments.Commands;
 
 namespace PaymentGatewayService.Payments.Validators
 {
-    public class GetPaymentCommandValidator : AbstractValidator<GetPaymentCommand>
+    public class SetPaymentStatusAcceptedCommandValidator : AbstractValidator<SetPaymentStatusAcceptedCommand>
     {
 
     }

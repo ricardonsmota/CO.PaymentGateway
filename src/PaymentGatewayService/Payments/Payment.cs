@@ -1,10 +1,14 @@
 using System;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace PaymentGatewayService.Payments
 {
     public class Payment
     {
-        public Guid Id { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
         public string CardNumber { get; set; }
 
@@ -16,7 +20,7 @@ namespace PaymentGatewayService.Payments
 
         public int Cvv { get; set; }
 
-        public PaymentCurrency Currency { get; set; }
+        public string Currency { get; set; }
 
         public DateTime Created { get; set; }
 

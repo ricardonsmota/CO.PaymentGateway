@@ -6,6 +6,8 @@ namespace PaymentGatewayService.Payments
     {
         Task Create(Payment payment);
 
-        Task<Payment> Get();
+        Task<Payment> Get(string id);
+
+        Task Save(Payment payment);
     }
 }
