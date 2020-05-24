@@ -1,4 +1,6 @@
 using System;
+using AutoMapper;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -32,6 +34,10 @@ namespace PaymentGatewayService.Api
             services.AddSingleton<IPaymentRepository, PaymentRepository>();
             services.AddSingleton<IPaymentService, PaymentService>();
 
+            services.AddAutoMapper(
+                c=>c.AddProfile<AutoMapperApiProfile>(),
+                typeof(Startup));
+
             services.AddSingleton(new EncryptorParameters
             {
                 Iv = Convert.FromBase64String(Configuration["Encryption:Iv"]),
@@ -39,6 +45,8 @@ namespace PaymentGatewayService.Api
             });
 
             services.AddSingleton<IEncryptor, Encryptor>();
+
+            services.AddLogging();
 
             services.AddControllers();
 

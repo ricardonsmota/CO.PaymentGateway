@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PaymentGatewayService.Api.ViewModels;
 using PaymentGatewayService.Payments;
@@ -9,10 +10,14 @@ namespace PaymentGatewayService.Api.Controllers
     [Route("api/v1/[controller]")]
     public class PaymentController : Controller
     {
+        private readonly IMapper _mapper;
         private readonly IPaymentService _service;
 
-        public PaymentController(IPaymentService service)
+        public PaymentController(
+            IMapper mapper,
+            IPaymentService service)
         {
+            _mapper = mapper;
             _service = service;
         }
 
@@ -29,13 +34,13 @@ namespace PaymentGatewayService.Api.Controllers
                 return BadRequest(response.Error);
             }
 
-            // var viewModel = _mapper.Map<(DataSet dataSet, List<ShareableGroup> shareableGroups), DataSetSimpleViewModel>(response.Result);
+            var viewModel = _mapper.Map<Payment,PaymentViewModel>(response.Result);
 
-            return Ok(response.Result);
+            return Ok(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreatePaymentViewModel model)
+        public async Task<IActionResult> Create(CreatePaymentRequest model)
         {
             var response = await _service.Create(new CreatePaymentCommand()
             {
@@ -52,9 +57,9 @@ namespace PaymentGatewayService.Api.Controllers
                 return BadRequest(response.Error);
             }
 
-            // var viewModel = _mapper.Map<(DataSet dataSet, List<ShareableGroup> shareableGroups), DataSetSimpleViewModel>(response.Result);
+            var viewModel = _mapper.Map<Payment,PaymentViewModel>(response.Result);
 
-            return Ok(response.Result);
+            return Ok(viewModel);
         }
     }
 }

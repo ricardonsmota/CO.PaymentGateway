@@ -17,14 +17,17 @@ namespace PaymentGatewayService.Payments
             _payments = database.GetCollection<Payment>("Payments");
         }
 
-        public async Task Create(Payment payment)
+        public async Task<Payment> Create(Payment payment)
         {
             await _payments.InsertOneAsync(payment.EncryptedPayment(_encryptor));
+
+            return payment.DecryptedPayment(_encryptor);
         }
 
         public async Task<Payment> Get(string id)
         {
             var payment = await _payments.Find(p => p.Id == id).FirstOrDefaultAsync();
+
             return payment.DecryptedPayment(_encryptor);
         }
 

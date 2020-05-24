@@ -1,6 +1,6 @@
 namespace PaymentGatewayService.Api.ViewModels
 {
-    public class CreatePaymentViewModel
+    public class PaymentViewModel
     {
         public string CardNumber { get; set; }
 
@@ -9,8 +9,6 @@ namespace PaymentGatewayService.Api.ViewModels
         public int ExpirationMonth { get; set; }
 
         public int ExpirationYear { get; set; }
-
-        public string Cvv { get; set; }
 
         public string Currency { get; set; }
     }
