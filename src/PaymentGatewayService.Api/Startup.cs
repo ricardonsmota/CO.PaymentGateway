@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -5,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
+using PaymentGatewayService.Common.Security;
 using PaymentGatewayService.Payments;
 
 namespace PaymentGatewayService.Api
@@ -18,7 +20,6 @@ namespace PaymentGatewayService.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             var dbConnectionString = Configuration.GetSection("PaymentGatewayDatabase:ConnectionString").Value;
@@ -30,6 +31,14 @@ namespace PaymentGatewayService.Api
             services.AddSingleton(client.GetDatabase(dbName));
             services.AddSingleton<IPaymentRepository, PaymentRepository>();
             services.AddSingleton<IPaymentService, PaymentService>();
+
+            services.AddSingleton(new EncryptorParameters
+            {
+                Iv = Convert.FromBase64String(Configuration["Encryption:Iv"]),
+                Key = Convert.FromBase64String(Configuration["Encryption:Key"]),
+            });
+
+            services.AddSingleton<IEncryptor, Encryptor>();
 
             services.AddControllers();
 

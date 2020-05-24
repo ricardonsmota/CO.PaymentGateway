@@ -1,6 +1,7 @@
 using System;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using PaymentGatewayService.Common.Security;
 
 namespace PaymentGatewayService.Payments
 {
@@ -18,7 +19,7 @@ namespace PaymentGatewayService.Payments
 
         public int ExpirationYear { get; set; }
 
-        public int Cvv { get; set; }
+        public string Cvv { get; set; }
 
         public string Currency { get; set; }
 
