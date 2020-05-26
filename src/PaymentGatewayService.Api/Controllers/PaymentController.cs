@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PaymentGatewayService.Api.ViewModels;
+using PaymentGatewayService.Common.ServiceResponse;
 using PaymentGatewayService.Payments;
 using PaymentGatewayService.Payments.Commands;
 
@@ -31,7 +32,13 @@ namespace PaymentGatewayService.Api.Controllers
 
             if (response.IsError)
             {
-                return BadRequest(response.Error);
+                switch (response.Error?.Code)
+                {
+                    case ServiceErrorCode.ValidationError:
+                        return BadRequest();
+                    case ServiceErrorCode.NotFound:
+                        return NotFound();
+                }
             }
 
             var viewModel = _mapper.Map<Payment,PaymentViewModel>(response.Result);
@@ -54,7 +61,13 @@ namespace PaymentGatewayService.Api.Controllers
 
             if (response.IsError)
             {
-                return BadRequest(response.Error);
+                switch (response.Error?.Code)
+                {
+                    case ServiceErrorCode.ValidationError:
+                        return BadRequest();
+                    case ServiceErrorCode.NotFound:
+                        return NotFound();
+                }
             }
 
             var viewModel = _mapper.Map<Payment,PaymentViewModel>(response.Result);

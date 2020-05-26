@@ -2,6 +2,8 @@ namespace PaymentGatewayService.Api.ViewModels
 {
     public class PaymentViewModel
     {
+        public string Id { get; set; }
+
         public string CardNumber { get; set; }
 
         public string Amount { get; set; }
