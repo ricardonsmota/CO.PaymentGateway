@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using AutoMapper;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
@@ -15,15 +16,26 @@ namespace PaymentGatewayService.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup()
         {
-            Configuration = configuration;
+            var codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            var uri = new UriBuilder(codeBase);
+            var path = Uri.UnescapeDataString(uri.Path);
+            var contentRoot = Path.GetDirectoryName(path);
+
+            var config = new ConfigurationBuilder();
+            config.AddJsonFile(contentRoot + "/appsettings.json", optional: false);
+            config.AddJsonFile(contentRoot + "/appsettings.development.json", optional: true);
+
+            config.AddEnvironmentVariables();
+            Configuration = config.Build();
         }
 
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
+
             var dbConnectionString = Configuration.GetSection("PaymentGatewayDatabase:ConnectionString").Value;
             var dbName = Configuration.GetSection("PaymentGatewayDatabase:DatabaseName").Value;
 
