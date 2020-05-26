@@ -14,8 +14,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentGatewayService.Api",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentGatewayService.Common", "src\PaymentGatewayService.Common\PaymentGatewayService.Common.csproj", "{1034940C-00BA-4D66-B96C-2EF4F152A243}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentGatewayService.Worker", "src\PaymentGatewayService.Worker\PaymentGatewayService.Worker.csproj", "{CE16E9BB-7233-4793-BE82-B3CC0D70CB36}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,10 +44,6 @@ Global
 		{1034940C-00BA-4D66-B96C-2EF4F152A243}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1034940C-00BA-4D66-B96C-2EF4F152A243}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1034940C-00BA-4D66-B96C-2EF4F152A243}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CE16E9BB-7233-4793-BE82-B3CC0D70CB36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CE16E9BB-7233-4793-BE82-B3CC0D70CB36}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CE16E9BB-7233-4793-BE82-B3CC0D70CB36}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CE16E9BB-7233-4793-BE82-B3CC0D70CB36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{50A99ADD-3F8E-414C-9EC6-F397B589483D} = {6F9FEC65-25FF-4F21-BAD4-962D939F2B78}

@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
+using PaymentGatewayService.AcquiringBank;
 using PaymentGatewayService.Common.Security;
 using PaymentGatewayService.Payments;
 
@@ -45,6 +46,17 @@ namespace PaymentGatewayService.Api
             services.AddSingleton(client.GetDatabase(dbName));
             services.AddSingleton<IPaymentRepository, PaymentRepository>();
             services.AddSingleton<IPaymentService, PaymentService>();
+
+            var bankServiceParameters = new AcquiringBankServiceParameters()
+            {
+                BankTotalBalance = int.Parse(Configuration["AcquiringBankParameters:BankTotalBalance"]),
+                TransactionMinTimeMs = int.Parse(Configuration["AcquiringBankParameters:TransactionMinTimeMs"]),
+                TransactionMaxTimeMs = int.Parse(Configuration["AcquiringBankParameters:TransactionMaxTimeMs"]),
+                TransactionTimeoutTimeMs = int.Parse(Configuration["AcquiringBankParameters:TransactionTimeoutTimeMs"])
+            };
+
+            services.AddSingleton<AcquiringBankServiceParameters>(bankServiceParameters);
+            services.AddSingleton<IAcquiringBankService, AcquiringBankService>();
 
             services.AddAutoMapper(
                 c=>c.AddProfile<AutoMapperApiProfile>(),

@@ -13,5 +13,7 @@ namespace PaymentGatewayService.Api.ViewModels
         public int ExpirationYear { get; set; }
 
         public string Currency { get; set; }
+
+        public PaymentStatusViewModel Status { get; set; }
     }
 }

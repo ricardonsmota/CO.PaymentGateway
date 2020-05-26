@@ -11,6 +11,9 @@ namespace PaymentGatewayService.Api
         {
             CreateMap<Payment, PaymentViewModel>()
                 .ForMember(x => x.CardNumber, d => d.MapFrom(v => MaskCardNumber(v.CardNumber)));
+
+            CreateMap<PaymentStatus, PaymentStatusViewModel>()
+                .ForMember(x => x.StatusCode, d => d.MapFrom(v => v.StatusCode.ToString()));
         }
 
         private string MaskCardNumber(string cardNumber)

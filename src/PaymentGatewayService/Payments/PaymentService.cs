@@ -2,6 +2,8 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
+using PaymentGatewayService.AcquiringBank;
+using PaymentGatewayService.AcquiringBank.Commands;
 using PaymentGatewayService.Common.ServiceResponse;
 using PaymentGatewayService.Payments.Commands;
 using PaymentGatewayService.Payments.Validators;
@@ -12,13 +14,16 @@ namespace PaymentGatewayService.Payments
     {
         private readonly ILogger _logger;
         private readonly IPaymentRepository _repository;
+        private readonly IAcquiringBankService _acquiringBankService;
 
         public PaymentService(
             ILogger<PaymentService> logger,
-            IPaymentRepository repository)
+            IPaymentRepository repository,
+            IAcquiringBankService acquiringBankService)
         {
             _logger = logger;
             _repository = repository;
+            _acquiringBankService = acquiringBankService;
         }
 
         public async Task<ServiceResult<Payment>> Create(CreatePaymentCommand command)
@@ -49,6 +54,35 @@ namespace PaymentGatewayService.Payments
             };
 
             await _repository.Create(payment);
+
+            /* In an ideal scenario I would publish an event to a message broker stating that a payment
+            was created and there would be no need to have these two services depending on each other like this */
+            Task.Run(async () =>
+            {
+                var transactionResponse = await _acquiringBankService.StartTransaction(new StartTransactionCommand()
+                {
+                    Amount = int.Parse(command.Amount),
+                    PaymentId = payment.Id
+                });
+
+                if (transactionResponse.IsSuccess)
+                {
+                    SetStatusAccepted(new SetPaymentStatusAcceptedCommand()
+                    {
+                        Id = payment.Id,
+                        Modified = DateTime.UtcNow
+                    });
+                }
+                else
+                {
+                    SetStatusRejected(new SetPaymentStatusRejectedCommand()
+                    {
+                        Id = payment.Id,
+                        Modified = DateTime.UtcNow,
+                        ErrorMessage = transactionResponse.ErrorMessage
+                    });
+                }
+            });
 
             return new ServiceResult<Payment>(payment);
         }
