@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using AutoMapper;
 using System.Reflection;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +14,8 @@ using MongoDB.Driver;
 using PaymentGatewayService.AcquiringBank;
 using PaymentGatewayService.Common.Security;
 using PaymentGatewayService.Payments;
+using PaymentGatewayService.Payments.Commands;
+using PaymentGatewayService.Payments.Validators;
 
 namespace PaymentGatewayService.Api
 {
@@ -55,7 +59,7 @@ namespace PaymentGatewayService.Api
                 TransactionTimeoutTimeMs = int.Parse(Configuration["AcquiringBankParameters:TransactionTimeoutTimeMs"])
             };
 
-            services.AddSingleton<AcquiringBankServiceParameters>(bankServiceParameters);
+            services.AddSingleton(bankServiceParameters);
             services.AddSingleton<IAcquiringBankService, AcquiringBankService>();
 
             services.AddAutoMapper(
@@ -72,7 +76,12 @@ namespace PaymentGatewayService.Api
 
             services.AddLogging();
 
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation();
+
+            services.AddTransient<IValidator<CreatePaymentCommand>, CreatePaymentCommandValidator>();
+            services.AddTransient<IValidator<GetPaymentCommand>, GetPaymentCommandValidator>();
+            services.AddTransient<IValidator<SetPaymentStatusAcceptedCommand>, SetPaymentStatusAcceptedCommandValidator>();
+            services.AddTransient<IValidator<SetPaymentStatusRejectedCommand>, SetPaymentStatusRejectedCommandValidator>();
 
             services.AddSwaggerGen(c =>
             {

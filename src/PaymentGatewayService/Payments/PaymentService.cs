@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using FluentValidation;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using PaymentGatewayService.AcquiringBank;
@@ -13,22 +14,25 @@ namespace PaymentGatewayService.Payments
     public class PaymentService : IPaymentService
     {
         private readonly ILogger _logger;
+        private readonly IValidatorFactory _validator;
         private readonly IPaymentRepository _repository;
         private readonly IAcquiringBankService _acquiringBankService;
 
         public PaymentService(
             ILogger<PaymentService> logger,
+            IValidatorFactory validator,
             IPaymentRepository repository,
             IAcquiringBankService acquiringBankService)
         {
             _logger = logger;
+            _validator = validator;
             _repository = repository;
             _acquiringBankService = acquiringBankService;
         }
 
         public async Task<ServiceResult<Payment>> Create(CreatePaymentCommand command)
         {
-            var validator = new CreatePaymentCommandValidator();
+            var validator = _validator.GetValidator<CreatePaymentCommand>();
             var validationResult = await validator.ValidateAsync(command);
 
             if (validationResult.IsValid == false)
@@ -56,7 +60,7 @@ namespace PaymentGatewayService.Payments
             await _repository.Create(payment);
 
             /* In an ideal scenario I would publish an event to a message broker stating that a payment
-            was created and there would be no need to have these two services depending on each other like this */
+            was created. This would be consumed by the AcquiringBankWorker and the logic dealt there */
             Task.Run(async () =>
             {
                 var transactionResponse = await _acquiringBankService.StartTransaction(new StartTransactionCommand()
@@ -89,7 +93,7 @@ namespace PaymentGatewayService.Payments
 
         public async Task<ServiceResult<Payment>> Get(GetPaymentCommand command)
         {
-            var validator = new GetPaymentCommandValidator();
+            var validator = _validator.GetValidator<GetPaymentCommand>();
             var validationResult = await validator.ValidateAsync(command);
 
             if (validationResult.IsValid == false)
@@ -110,7 +114,7 @@ namespace PaymentGatewayService.Payments
 
         public async Task<ServiceResult> SetStatusAccepted(SetPaymentStatusAcceptedCommand command)
         {
-            var validator = new SetPaymentStatusAcceptedCommandValidator();
+            var validator = _validator.GetValidator<SetPaymentStatusAcceptedCommand>();
             var validationResult = await validator.ValidateAsync(command);
 
             if (validationResult.IsValid == false)
@@ -142,7 +146,7 @@ namespace PaymentGatewayService.Payments
 
         public async Task<ServiceResult> SetStatusRejected(SetPaymentStatusRejectedCommand command)
         {
-            var validator = new SetPaymentStatusRejectedCommandValidator();
+            var validator = _validator.GetValidator<SetPaymentStatusRejectedCommand>();
             var validationResult = await validator.ValidateAsync(command);
 
             if (validationResult.IsValid == false)
