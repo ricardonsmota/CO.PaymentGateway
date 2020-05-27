@@ -61,7 +61,7 @@ namespace PaymentGatewayService.Payments
             {
                 var transactionResponse = await _acquiringBankService.StartTransaction(new StartTransactionCommand()
                 {
-                    Amount = int.Parse(command.Amount),
+                    Amount = command.Amount,
                     PaymentId = payment.Id
                 });
 

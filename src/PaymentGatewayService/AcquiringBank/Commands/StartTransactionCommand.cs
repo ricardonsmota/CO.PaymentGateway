@@ -4,6 +4,6 @@ namespace PaymentGatewayService.AcquiringBank.Commands
     {
         public string PaymentId { get; set; }
 
-        public int Amount { get; set; }
+        public double Amount { get; set; }
     }
 }

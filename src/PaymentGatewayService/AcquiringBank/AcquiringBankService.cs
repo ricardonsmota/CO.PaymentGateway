@@ -13,7 +13,7 @@ namespace PaymentGatewayService.AcquiringBank
         private readonly AcquiringBankServiceParameters _parameters;
 
         private static Random _random;
-        private static int _bankRemainingBalance;
+        private static double _bankRemainingBalance;
 
         public AcquiringBankService(
             AcquiringBankServiceParameters parameters)

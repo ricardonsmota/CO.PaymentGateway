@@ -4,7 +4,7 @@ namespace PaymentGatewayService.Api.ViewModels
     {
         public string CardNumber { get; set; }
 
-        public string Amount { get; set; }
+        public double Amount { get; set; }
 
         public int ExpirationMonth { get; set; }
 
