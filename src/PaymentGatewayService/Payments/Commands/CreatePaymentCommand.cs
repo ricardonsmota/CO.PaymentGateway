@@ -15,7 +15,5 @@ namespace PaymentGatewayService.Payments.Commands
         public string Cvv { get; set; }
 
         public string Currency { get; set; }
-
-        public DateTime Created { get; set; }
     }
 }

@@ -7,7 +7,6 @@ using PaymentGatewayService.AcquiringBank;
 using PaymentGatewayService.AcquiringBank.Commands;
 using PaymentGatewayService.Common.ServiceResponse;
 using PaymentGatewayService.Payments.Commands;
-using PaymentGatewayService.Payments.Validators;
 
 namespace PaymentGatewayService.Payments
 {
@@ -112,7 +111,7 @@ namespace PaymentGatewayService.Payments
             return new ServiceResult<Payment>(payment);
         }
 
-        public async Task<ServiceResult> SetStatusAccepted(SetPaymentStatusAcceptedCommand command)
+        public async Task<ServiceResult<Payment>> SetStatusAccepted(SetPaymentStatusAcceptedCommand command)
         {
             var validator = _validator.GetValidator<SetPaymentStatusAcceptedCommand>();
             var validationResult = await validator.ValidateAsync(command);
@@ -144,7 +143,7 @@ namespace PaymentGatewayService.Payments
             return new ServiceResult<Payment>(payment);
         }
 
-        public async Task<ServiceResult> SetStatusRejected(SetPaymentStatusRejectedCommand command)
+        public async Task<ServiceResult<Payment>> SetStatusRejected(SetPaymentStatusRejectedCommand command)
         {
             var validator = _validator.GetValidator<SetPaymentStatusRejectedCommand>();
             var validationResult = await validator.ValidateAsync(command);

@@ -10,8 +10,8 @@ namespace PaymentGatewayService.Payments
 
         Task<ServiceResult<Payment>> Get(GetPaymentCommand command);
 
-        Task<ServiceResult> SetStatusAccepted(SetPaymentStatusAcceptedCommand command);
+        Task<ServiceResult<Payment>> SetStatusAccepted(SetPaymentStatusAcceptedCommand command);
 
-        Task<ServiceResult> SetStatusRejected(SetPaymentStatusRejectedCommand command);
+        Task<ServiceResult<Payment>> SetStatusRejected(SetPaymentStatusRejectedCommand command);
     }
 }
