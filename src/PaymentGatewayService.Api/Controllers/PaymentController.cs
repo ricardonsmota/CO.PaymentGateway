@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PaymentGatewayService.Api.ViewModels;
 using PaymentGatewayService.Common.ServiceResponse;
@@ -8,6 +9,7 @@ using PaymentGatewayService.Payments.Commands;
 
 namespace PaymentGatewayService.Api.Controllers
 {
+    [Authorize]
     [Route("api/v1/[controller]")]
     public class PaymentController : Controller
     {

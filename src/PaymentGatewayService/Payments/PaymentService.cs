@@ -6,6 +6,7 @@ using MongoDB.Bson;
 using PaymentGatewayService.AcquiringBank;
 using PaymentGatewayService.AcquiringBank.Commands;
 using PaymentGatewayService.Common.ServiceResponse;
+using PaymentGatewayService.Common.Validation;
 using PaymentGatewayService.Payments.Commands;
 
 namespace PaymentGatewayService.Payments
@@ -36,6 +37,7 @@ namespace PaymentGatewayService.Payments
 
             if (validationResult.IsValid == false)
             {
+                _logger.LogWarning($"Validation Error: {validationResult.ErrorsToString()}");
                 return new ServiceResult<Payment>(ServiceErrorCode.ValidationError);
             }
 
@@ -60,7 +62,11 @@ namespace PaymentGatewayService.Payments
 
             /* In an ideal scenario I would publish an event to a message broker stating that a payment
             was created. This would be consumed by the AcquiringBankWorker and the logic dealt there */
+
+#pragma warning disable 4014
+            /* We dont want to wait, not a good practice but it is just for mock purposes. */
             Task.Run(async () =>
+#pragma warning restore 4014
             {
                 var transactionResponse = await _acquiringBankService.StartTransaction(new StartTransactionCommand()
                 {
@@ -70,7 +76,10 @@ namespace PaymentGatewayService.Payments
 
                 if (transactionResponse.IsSuccess)
                 {
+#pragma warning disable 4014
+                    /* We dont want to wait, not a good practice but it is just for mock purposes. */
                     SetStatusAccepted(new SetPaymentStatusAcceptedCommand()
+#pragma warning restore 4014
                     {
                         Id = payment.Id,
                         Modified = DateTime.UtcNow
@@ -78,7 +87,10 @@ namespace PaymentGatewayService.Payments
                 }
                 else
                 {
+#pragma warning disable 4014
+                    /* We dont want to wait, not a good practice but it is just for mock purposes. */
                     SetStatusRejected(new SetPaymentStatusRejectedCommand()
+#pragma warning restore 4014
                     {
                         Id = payment.Id,
                         Modified = DateTime.UtcNow,
@@ -97,6 +109,7 @@ namespace PaymentGatewayService.Payments
 
             if (validationResult.IsValid == false)
             {
+                _logger.LogWarning($"Validation Error: {validationResult.ErrorsToString()}");
                 return new ServiceResult<Payment>(ServiceErrorCode.ValidationError);
             }
 
@@ -119,8 +132,7 @@ namespace PaymentGatewayService.Payments
             if (validationResult.IsValid == false)
             {
                 _logger.LogError(
-                    $"A validation error occurred while trying to set payment {command.Id.ToString()} as accepted.");
-
+                    $"A validation error occurred while trying to set payment {command.Id} as accepted.");
                 return new ServiceResult<Payment>(ServiceErrorCode.ValidationError);
             }
 
@@ -128,7 +140,7 @@ namespace PaymentGatewayService.Payments
 
             if (payment == null)
             {
-                _logger.LogError($"Payment with id {command.Id.ToString()} not found.");
+                _logger.LogError($"Payment with id {command.Id} not found.");
                 return new ServiceResult<Payment>(ServiceErrorCode.NotFound);
             }
 
@@ -151,7 +163,7 @@ namespace PaymentGatewayService.Payments
             if (validationResult.IsValid == false)
             {
                 _logger.LogError(
-                    $"A validation error occurred while trying to set payment {command.Id.ToString()} as rejected.");
+                    $"A validation error occurred while trying to set payment {command.Id} as rejected.");
 
                 return new ServiceResult<Payment>(ServiceErrorCode.ValidationError);
             }
@@ -160,7 +172,7 @@ namespace PaymentGatewayService.Payments
 
             if (payment == null)
             {
-                _logger.LogError($"Payment with id {command.Id.ToString()} not found.");
+                _logger.LogError($"Payment with id {command.Id} not found.");
                 return new ServiceResult<Payment>(ServiceErrorCode.NotFound);
             }
 
