@@ -9,4 +9,12 @@
     
      steps:
        - checkout
-       - run: dotnet build
+       - run: 
+           name: Restore Packages
+           command: dotnet restore
+       - run: 
+           name: Build Application
+           command: dotnet build
+       - run: 
+           name: Unit Tests
+           command: dotnet test
